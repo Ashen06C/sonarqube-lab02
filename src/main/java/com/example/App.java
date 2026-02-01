@@ -2,14 +2,20 @@ package main.java.com.example;
 
 public class App {
 
-    public static void main(String[] args) throws Exception {
+    private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(App.class.getName());
+
+    public static void main(String[] args) {
 
         Calculator calc = new Calculator();
 
-        System.out.println(calc.calculate(10, 5, "add"));
+        LOGGER.info(() -> String.valueOf(calc.calculate(10, 5, "add")));
 
         UserService service = new UserService();
-        service.findUser("admin");
-        service.deleteUser("admin");
+        try {
+            service.findUser("admin");
+            service.deleteUser("admin");
+        } catch (Exception e) {
+            LOGGER.log(java.util.logging.Level.SEVERE, "Error in UserService", e);
+        }
     }
 }
